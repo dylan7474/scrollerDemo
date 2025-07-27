@@ -1,0 +1,22 @@
+# Makefile.win
+CC = x86_64-w64-mingw32-gcc
+TARGET = scroller.exe
+SRCS = main.c
+# CFLAGS: Include paths for MinGW SDL2/SDL2_mixer, Wall, O2
+CFLAGS = -I/usr/x86_64-w64-mingw32/include/SDL2 \
+         -I/usr/x86_64-w64-mingw32/include \
+         -Wall -O2
+
+# LDFLAGS: Linker flags for MinGW SDL2/SDL2_mixer, static linking, and Windows specific libraries
+LDFLAGS = -L/usr/x86_64-w64-mingw32/lib \
+          -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer \
+          -lm -mwindows -static \
+          -lws2_32 -lwinmm -lgdi32 -lole32 -loleaut32 -lversion -lsetupapi -lbcrypt -lpthread -lcrypt32 -lwldap32 -limm32
+
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET) $(LDFLAGS)
+
+clean:
+	rm -f $(TARGET)
