@@ -1,0 +1,25 @@
+# Makefile.mac
+CC = gcc
+TARGET = scrollerDemo
+SRCS = main.c
+
+# CFLAGS for macOS:
+# -F/Library/Frameworks for SDL2.framework
+# -I/usr/local/include/SDL2 for SDL2_ttf and SDL2_mixer headers
+CFLAGS = -Wall -O2 -F/Library/Frameworks \
+         -I/Library/Frameworks/SDL2.framework/Headers \
+         -I/usr/local/include/SDL2
+
+# LDFLAGS for macOS:
+# -framework SDL2 for SDL2.framework
+# -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer for dynamic libraries
+LDFLAGS = -F/Library/Frameworks -framework SDL2 \
+          -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer
+
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET) $(LDFLAGS)
+
+clean:
+	rm -f $(TARGET)
